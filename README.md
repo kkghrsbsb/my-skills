@@ -28,6 +28,7 @@ mdbook serve docs
 | `/mdexplain`             | 记录刚实施完的改动                 | `docs/src/explain/` |
 | `/mdlearn <文件或概念>`  | 理解某段代码或架构怎么工作         | `docs/src/learn/`   |
 | `/mdadr <决策描述>`      | 记录技术选型和方案取舍             | `docs/src/adr/`     |
+| `/mdnote <想法描述>`      | 记录记录想法、思路或待探索的方向             | `docs/src/notes/`     |
 
 **所有文档 skill 执行完后都会停止，等待你确认，不会自动改代码。**
 
@@ -49,6 +50,9 @@ mdbook serve docs
 
 # 记录技术选型
 /mdadr 选择 xxx 而非 xxx 作为架构
+
+# 记录想法、思路或待探索的方向
+/mdnote 我在想 xxx 是不是可以 xxx ，先记下来之后验证。
 
 # 新项目接入
 # 先在 docs/ 目录执行 mdbook init，然后：

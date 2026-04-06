@@ -69,6 +69,8 @@ git-repository-url = "<上一步获取的 URL>"
 
 - [README](./README.md)
 
+- [个人笔记]()
+
 - [方案]()
 
 - [解释说明]()
