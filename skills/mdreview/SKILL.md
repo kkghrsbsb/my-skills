@@ -1,0 +1,33 @@
+---
+name: mdreview
+description: Write a code review document for specified files or recent changes. Triggers on requests to review, audit, or inspect code.
+---
+
+先不要改代码。
+
+**确定审查范围：**
+- 若有参数，以参数指定的文件或模块为准
+- 若无参数，运行 `git diff HEAD --name-only` 获取最近变更的文件列表，以这些文件为审查范围
+- 若 diff 为空且无参数，提示用户说明要审查的文件或模块，停止执行
+
+按以下步骤执行：
+
+1. 阅读审查范围内的代码文件、关联模块和现有行为。
+2. 识别以下类型的问题：
+   - 逻辑错误
+   - 脆弱的假设
+   - 缺失的校验
+   - 结构不合理
+   - 命名不清晰
+   - 死代码
+   - 性能问题
+   - 可维护性风险
+3. 找到项目文档目录：优先使用 `docs/src/review/`，若不存在则选择项目中合适的文档位置。
+4. 创建 review 文档，文件名使用 kebab-case 加日期前缀，如 `2026-04-auth-module-review.md`，内容包含：
+   - 审查范围
+   - 发现的问题（按严重程度排序）
+   - 具体修改建议
+5. 更新 `docs/src/SUMMARY.md`：优先填充 `- [审查报告]()` 下已有的空链接占位符，而不是在末尾追加新条目。
+6. 写完后停止，等待用户确认，不得主动开始改代码。
+
+$ARGUMENTS
