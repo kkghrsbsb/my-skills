@@ -22,7 +22,7 @@ mdbook serve docs
 
 | 命令                     | 场景                               | 输出位置            |
 | ------------------------ | ---------------------------------- | ------------------- |
-| `/mdinit`   | 项目首次初始化 mdBook 文档结构，在手动执行 `mdbook init` 之后调用 | 要求在 `docs/` 中先初始化 `mdbook init`  |
+| `/mdinit`   | 项目首次初始化 mdBook 文档结构，在手动执行 `mdbook init` 之后调用 | `docs/`  |
 | `/mdplan <功能描述>`     | 写代码前，先出方案                 | `docs/src/plan/`    |
 | `/mdreview <文件或模块>` | 审查代码质量，无参数则审查最近变更 | `docs/src/review/`  |
 | `/mdexplain`             | 记录刚实施完的改动                 | `docs/src/explain/` |
@@ -32,8 +32,6 @@ mdbook serve docs
 **所有文档 skill 执行完后都会停止，等待你确认，不会自动改代码。**
 
 ## 典型工作流
-
-示例
 
 ```
 # 新功能开发
