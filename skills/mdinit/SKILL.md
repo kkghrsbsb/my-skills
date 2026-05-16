@@ -10,7 +10,7 @@ description: Initialize mdBook documentation structure in docs/ after the user h
 - `src/`
 - `book/`
 
-不要自行执行 `mdbook init`，不要读取整个项目源码，不要试图"理解项目"。
+不要自行执行 `mdbook init`。可以轻量粗读项目元信息和顶层结构，但不要做深度源码分析或全项目扫描。
 
 ---
 
@@ -44,19 +44,21 @@ git-repository-url = "<上一步获取的 URL>"
 
 ### 5. 生成 docs/src/README.md
 
-只读取项目根目录的 `./README.md`（若存在）作为参考，提取项目名称和简介，生成 `docs/src/README.md`。若根目录 README.md 不存在，则生成只含项目名和占位描述的最简版本。不要阅读其他项目文件。
+结合用户调用此 skill 时提供的背景说明、项目根目录 `README.md`（若存在）、常见项目清单文件（如 `package.json`、`Cargo.toml`、`pyproject.toml`、`go.mod`）和顶层目录结构，生成 `docs/src/README.md`。
+
+`docs/src/README.md` 是 mdBook 文档集首页，用来说明这套文档当下服务的工作目标和项目背景，不是 agent 理解项目时必须先看的规则入口。不要把 AGENTS.md、CLAUDE.md、长期维护规则或文档导航重复搬进这里。
 
 生成内容用中文，格式如下：
 ```markdown
 # <项目名>
 
-<项目简介>
+<项目背景或一句话简介>
 
-## 快速开始
+## 当前目标
 
-<!-- TODO -->
+<用户本次建立文档的原因和目标；若用户未说明则写 TODO>
 
-## 项目结构
+## 项目概览
 
 <!-- TODO -->
 ```
@@ -84,22 +86,20 @@ git-repository-url = "<上一步获取的 URL>"
 - [归档]()
 ```
 
+后续所有文档工作流都应在对应分类标题下面添加二级子项，不要直接把分类标题改成文档链接。例如：
+```markdown
+- [方案]()
+  - [用户认证方案](./plan/2026-04-24-user-auth-plan.md)
+```
+
 ### 7. 删除 stub 文件
 
 删除 `docs/src/SUMMARY.md` 原本引用的 stub 文件，通常是 `docs/src/chapter_1.md`。若文件不存在则跳过。
-
-### 8. 提醒用户更新 .gitignore
-
-输出以下提示，不要自动修改 .gitignore：
-```
-⚠️  请手动在项目根目录的 .gitignore 中添加以下内容以忽略 mdBook 构建产物：
-docs/book/
-```
 
 ---
 
 ## 完成后输出摘要
 
-列出本次执行的所有操作：已修改的文件、已删除的文件、以及需要用户手动处理的事项。
+列出本次执行的所有操作：已修改的文件和已删除的文件。
 
 $ARGUMENTS

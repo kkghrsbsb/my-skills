@@ -1,6 +1,26 @@
 # my-skills
 
-个人 skills 仓库，管理和备份个人 `~/.claude/skills/`
+个人 skills 仓库，管理和备份个人 Claude Code / Codex skills。
+
+## 安装
+
+```bash
+# 安装到 Claude Code
+python3 install_claude.py
+
+# 安装到 Codex
+python3 install_codex.py
+```
+
+默认安装位置：
+
+- Claude Code: `~/.claude/skills/`
+- Codex: `~/.codex/skills/`
+
+可通过环境变量覆盖安装根目录：
+
+- Claude Code: `CLAUDE_HOME`
+- Codex: `CODEX_HOME`
 
 # mdbook 项目文档管理介绍
 
@@ -61,5 +81,5 @@ mdbook serve docs
 
 ## 文件命名规范
 
-所有 skill 生成的文档统一使用 `YYYY-MM-<主题>-<类型>.md`，例如：
-`2026-04-user-auth-plan.md`、`2026-04-001-use-dora-rs-adr.md`
+所有 skill 生成的文档统一使用 `YYYY-MM-DD-<主题>-<类型>.md`，例如：
+`2026-04-24-user-auth-plan.md`、`2026-04-24-001-use-dora-rs-adr.md`

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-Install skills from this repo's skills/ folder into ~/.claude/skills/
+Install skills from this repo's skills/ folder into Codex's skills folder.
 Supports Windows, macOS, and Linux.
 """
 
+import os
 import shutil
 import sys
 from pathlib import Path
@@ -11,7 +12,8 @@ from pathlib import Path
 
 def main():
     repo_skills = Path(__file__).parent / "skills"
-    target_skills = Path.home() / ".claude" / "skills"
+    codex_home = Path(os.environ.get("CODEX_HOME", Path.home() / ".codex"))
+    target_skills = codex_home / "skills"
 
     if not repo_skills.exists():
         print(f"Error: skills/ folder not found at {repo_skills}", file=sys.stderr)

@@ -23,11 +23,11 @@ description: Write a code review document for specified files or recent changes.
    - 性能问题
    - 可维护性风险
 3. 找到项目文档目录：优先使用 `docs/src/review/`，若不存在则选择项目中合适的文档位置。
-4. 创建 review 文档，文件名使用 kebab-case 加日期前缀，如 `2026-04-auth-module-review.md`，内容包含：
+4. 创建 review 文档，文件名必须使用当天日期前缀 `YYYY-MM-DD-` 加 kebab-case 主题，如 `2026-04-24-auth-module-review.md`，内容包含：
    - 审查范围
    - 发现的问题（按严重程度排序）
    - 具体修改建议
-5. 更新 `docs/src/SUMMARY.md`：优先填充 `- [审查报告]()` 下已有的空链接占位符，而不是在末尾追加新条目。
+5. 更新 `docs/src/SUMMARY.md`：保留 `- [审查报告]()` 分类标题不变，在其下面添加二级子项链接，例如 `  - [认证模块审查](./review/2026-04-24-auth-module-review.md)`。不要把 `- [审查报告]()` 本身替换成文档链接，也不要在末尾追加孤立条目。
 6. 写完后停止，等待用户确认，不得主动开始改代码。
 
 $ARGUMENTS

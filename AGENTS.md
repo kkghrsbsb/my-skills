@@ -1,10 +1,10 @@
-# 个人项目级 CLAUDE.md
+# 个人项目级 AGENTS.md
 
-`docs/src/README.md` 是 mdBook 文档集首页，用来说明当前文档目标和项目背景，不作为 Claude Code 指令文件。
+`docs/src/README.md` 是 mdBook 文档集首页，用来说明当前文档目标和项目背景，不作为 agent 指令文件。
 
-复制下面的内容到项目级 CLAUDE.md 作为初始
+复制下面的内容到项目级 AGENTS.md 作为初始
 
-# CLAUDE.md
+# AGENTS.md
 
 ## Documentation Rules
 - `docs/src/README.md` is only the mdBook homepage for the current documentation context, not an agent instruction file.
