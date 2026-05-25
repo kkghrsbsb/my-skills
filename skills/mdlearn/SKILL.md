@@ -5,8 +5,9 @@ description: Write a learning guide explaining how code or architecture works. T
 
 按以下步骤执行：
 
+0. 定位 mdBook 根目录：先查找当前项目的 mdBook 根目录，可能是 `docs/`，也可能是 `docs/<自定义名称>/`；有且只有一个候选时使用该目录，若多个候选同时存在，询问用户选择。后续所有文档路径都基于 `<mdbook-root>/src/`，不要默认写死为 `docs/src/`。
 1. 阅读指定的代码文件、模块或架构相关文件。
-2. 找到项目文档目录：优先使用 `docs/src/learn/`，若不存在则选择项目中合适的文档位置。
+2. 找到项目文档目录：使用 `<mdbook-root>/src/learn/`，若不存在则创建该目录。
 3. 创建学习指南文档，文件名必须使用当天日期前缀 `YYYY-MM-DD-` 加 kebab-case 主题，如 `2026-04-24-dataflow-arch-learn.md`，内容围绕"理解"而非"记录变更"，包含：
    - **是什么**：概念或模块的定义和职责
    - **为什么这样设计**：设计动机、权衡和背景
@@ -14,7 +15,7 @@ description: Write a learning guide explaining how code or architecture works. T
    - **关键代码解读**：重要片段的逐步说明
    - **常见误区或注意点**：容易搞错的地方
    - **延伸阅读**（若存在明显相关模块或外部概念时补充）
-4. 更新 `docs/src/SUMMARY.md`：保留 `- [学习笔记]()` 分类标题不变，在其下面添加二级子项链接，例如 `  - [数据流架构学习笔记](./learn/2026-04-24-dataflow-arch-learn.md)`。不要把 `- [学习笔记]()` 本身替换成文档链接，也不要在末尾追加孤立条目。
+4. 更新 `<mdbook-root>/src/SUMMARY.md`：保留 `- [学习笔记]()` 分类标题不变，在其下面添加二级子项链接，例如 `  - [数据流架构学习笔记](./learn/2026-04-24-dataflow-arch-learn.md)`。不要把 `- [学习笔记]()` 本身替换成文档链接，也不要在末尾追加孤立条目。
 5. 写完后停止，除非用户明确要求继续。
 
 **写作原则：**

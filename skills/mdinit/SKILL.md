@@ -1,11 +1,15 @@
 ---
 name: mdinit
-description: Initialize mdBook documentation structure in docs/ after the user has run `mdbook init`. Updates book.toml, creates README.md, resets SUMMARY.md, and cleans up stub files.
+description: Initialize mdBook documentation structure after the user has run `mdbook init`. Supports either docs/ or an isolated docs/<namespace>/ book root.
 ---
 
 ## 前提条件
 
-此 skill 假设用户已在 `docs/` 目录中手动执行过 `mdbook init`，即 `docs/` 下已存在：
+此 skill 假设用户已在目标 mdBook 根目录中手动执行过 `mdbook init`。目标根目录可以是：
+- `docs/`
+- `docs/<自定义名称>/`，适合 fork、协作仓库或个人隔离文档
+
+目标根目录下应已存在：
 - `book.toml`
 - `src/`
 - `book/`
@@ -16,13 +20,23 @@ description: Initialize mdBook documentation structure in docs/ after the user h
 
 ## 执行步骤
 
-### 1. 确认 mdbook init 已执行
+### 1. 定位 mdBook 根目录
 
-检查 `docs/book.toml` 是否存在。若不存在，停止并提示用户先在 `docs/` 目录中执行 `mdbook init`。
+按以下顺序确定 mdBook 根目录，后续所有路径都相对此根目录展开：
+1. 若用户明确指定目录或名称，如 `docs/kkghrsbsb/` 或 `kkghrsbsb`，使用 `docs/<名称>/`。
+2. 若存在 `docs/book.toml` 和 `docs/src/`，将 `docs/` 作为候选。
+3. 扫描 `docs/*/book.toml` 且同级存在 `src/` 的目录，将其作为候选。
+4. 若只有一个候选，使用该候选。
+5. 若存在多个候选，停止并询问用户选择哪个 mdBook 根目录。
+6. 若没有候选，停止并提示用户先执行：
+   - 传统模式：`cd docs && mdbook init`
+   - 个人隔离模式：`mkdir -p docs/<名称> && cd docs/<名称> && mdbook init`
+
+如果用户在 fork 或协作项目中未明确指定目录，优先建议使用 `docs/<自定义名称>/`，避免占用项目正式 `docs/`。
 
 ### 2. 检查是否已初始化过
 
-检查 `docs/src/README.md` 是否已存在：
+检查 `<mdbook-root>/src/README.md` 是否已存在：
 - 若已存在，停止执行，提示用户此项目文档结构已初始化，若需要重新初始化请明确确认，不得自动覆盖。
 - 若不存在，继续执行。
 
@@ -36,17 +50,19 @@ description: Initialize mdBook documentation structure in docs/ after the user h
 
 ### 4. 更新 book.toml
 
-在 `docs/book.toml` 末尾追加：
+在 `<mdbook-root>/book.toml` 末尾追加：
 ```toml
 [output.html]
 git-repository-url = "<上一步获取的 URL>"
 ```
 
-### 5. 生成 docs/src/README.md
+若 `[output.html]` 或 `git-repository-url` 已存在，不要重复追加；应在保留其他配置的前提下补充或更新 `git-repository-url`。
 
-结合用户调用此 skill 时提供的背景说明、项目根目录 `README.md`（若存在）、常见项目清单文件（如 `package.json`、`Cargo.toml`、`pyproject.toml`、`go.mod`）和顶层目录结构，生成 `docs/src/README.md`。
+### 5. 生成 <mdbook-root>/src/README.md
 
-`docs/src/README.md` 是 mdBook 文档集首页，用来说明这套文档当下服务的工作目标和项目背景，不是 agent 理解项目时必须先看的规则入口。不要把 AGENTS.md、CLAUDE.md、长期维护规则或文档导航重复搬进这里。
+结合用户调用此 skill 时提供的背景说明、项目根目录 `README.md`（若存在）、常见项目清单文件（如 `package.json`、`Cargo.toml`、`pyproject.toml`、`go.mod`）和顶层目录结构，生成 `<mdbook-root>/src/README.md`。
+
+`<mdbook-root>/src/README.md` 是 mdBook 文档集首页，用来说明这套文档当下服务的工作目标和项目背景，不是 agent 理解项目时必须先看的规则入口。不要把 AGENTS.md、CLAUDE.md、长期维护规则或文档导航重复搬进这里。
 
 生成内容用中文，格式如下：
 ```markdown
@@ -63,9 +79,9 @@ git-repository-url = "<上一步获取的 URL>"
 <!-- TODO -->
 ```
 
-### 6. 重置 docs/src/SUMMARY.md
+### 6. 重置 <mdbook-root>/src/SUMMARY.md
 
-将 `docs/src/SUMMARY.md` 内容替换为：
+将 `<mdbook-root>/src/SUMMARY.md` 内容替换为：
 ```markdown
 # Summary
 
@@ -94,7 +110,7 @@ git-repository-url = "<上一步获取的 URL>"
 
 ### 7. 删除 stub 文件
 
-删除 `docs/src/SUMMARY.md` 原本引用的 stub 文件，通常是 `docs/src/chapter_1.md`。若文件不存在则跳过。
+删除 `<mdbook-root>/src/SUMMARY.md` 原本引用的 stub 文件，通常是 `<mdbook-root>/src/chapter_1.md`。若文件不存在则跳过。
 
 ---
 

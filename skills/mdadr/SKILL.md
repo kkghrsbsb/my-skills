@@ -5,15 +5,20 @@ description: Write an Architecture Decision Record documenting why a technical d
 
 按以下步骤执行：
 
+**定位 mdBook 根目录：**
+- 先查找当前项目的 mdBook 根目录，可能是 `docs/`，也可能是 `docs/<自定义名称>/`
+- 有且只有一个候选时使用该目录；若多个候选同时存在，询问用户选择
+- 后续所有文档路径都基于 `<mdbook-root>/src/`，不要默认写死为 `docs/src/`
+
 **检查是否已有同主题文档：**
-- 扫描 `docs/src/adr/` 下已有文件，判断是否存在同主题的 ADR 文档
+- 扫描 `<mdbook-root>/src/adr/` 下已有文件，判断是否存在同主题的 ADR 文档
 - 若存在，询问用户：是补充修订原决策，还是记录一个推翻旧决策的新决策？
 - 若是推翻旧决策，在新 ADR 中注明被替代的旧文件，同时在旧文件头部追加一行标注：`> ⚠️ 此决策已被 [xxx-adr.md](../adr/xxx-adr.md) 替代`，不删除旧文件
 
 按以下步骤执行：
 
 1. 了解决策背景：阅读用户描述，必要时读取少量相关代码或配置文件，不做全项目扫描。
-2. 找到项目文档目录：优先使用 `docs/src/adr/`，若不存在则创建该目录。
+2. 找到项目文档目录：使用 `<mdbook-root>/src/adr/`，若不存在则创建该目录。
 3. 创建 ADR 文档，文件名必须使用当天日期前缀 `YYYY-MM-DD-`、三位序号和 kebab-case 主题，如 `2026-04-24-001-use-dora-rs-over-ros2.md`，内容包含：
 
    - **状态**：`已采纳` / `已替代` / `草稿`
@@ -24,7 +29,7 @@ description: Write an Architecture Decision Record documenting why a technical d
    - **后果**：这个决策带来的影响，包括正面影响、负面影响、需要接受的权衡
    - **相关文档**（可选）：关联的 plan、learn 或外部参考链接
 
-4. 更新 `docs/src/SUMMARY.md`：保留 `- [决策记录]()` 分类标题不变，在其下面添加二级子项链接，例如 `  - [采用 Dora RS 决策](./adr/2026-04-24-001-use-dora-rs-over-ros2.md)`。不要把 `- [决策记录]()` 本身替换成文档链接，也不要在末尾追加孤立条目。
+4. 更新 `<mdbook-root>/src/SUMMARY.md`：保留 `- [决策记录]()` 分类标题不变，在其下面添加二级子项链接，例如 `  - [采用 Dora RS 决策](./adr/2026-04-24-001-use-dora-rs-over-ros2.md)`。不要把 `- [决策记录]()` 本身替换成文档链接，也不要在末尾追加孤立条目。
 5. 写完后停止，除非用户明确要求继续。
 
 **写作原则：**

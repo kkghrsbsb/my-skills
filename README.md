@@ -27,7 +27,7 @@ python3 install_codex.py
 主要习惯使用md在线书籍工具 [mdbook](https://github.com/rust-lang/mdBook) 做项目文档管理，形式可供参考
 
 ```
-# 安装 mdbook 在项目 docs/ 中
+# 传统模式：安装 mdBook 在项目 docs/ 中
 cargo install mdbook
 cd docs
 mdbook init
@@ -36,19 +36,37 @@ mdbook init
 mdbook serve docs
 ```
 
+在 fork 或协作项目中，推荐使用个人隔离目录，避免占用项目正式 `docs/`：
+
+```
+mkdir -p docs/<自定义名称>
+cd docs/<自定义名称>
+mdbook init
+
+# 项目根目录启用在线预览
+mdbook serve docs/<自定义名称>
+```
+
+所有文档类 skill 会先定位 mdBook 根目录。根目录可以是 `docs/`，也可以是 `docs/<自定义名称>/`；若同时存在多个候选，会先询问用户选择。
+
+忽略策略按项目关系选择：
+
+- 个人仓库或希望保留文档源码：忽略 `<mdbook-root>/book/`
+- fork 或协作仓库中的个人文档：可在项目根 `.gitignore` 忽略 `docs/<自定义名称>/`
+
 ## 文档工作流
 
 示例：（这些 skills 都是以 md 开头的）
 
 | 命令                     | 场景                               | 输出位置            |
 | ------------------------ | ---------------------------------- | ------------------- |
-| `/mdinit`   | 项目首次初始化 mdBook 文档结构，在手动执行 `mdbook init` 之后调用 | `docs/`  |
-| `/mdplan <功能描述>`     | 写代码前，先出方案                 | `docs/src/plan/`    |
-| `/mdreview <文件或模块>` | 审查代码质量，无参数则审查最近变更 | `docs/src/review/`  |
-| `/mdexplain`             | 记录刚实施完的改动                 | `docs/src/explain/` |
-| `/mdlearn <文件或概念>`  | 理解某段代码或架构怎么工作         | `docs/src/learn/`   |
-| `/mdadr <决策描述>`      | 记录技术选型和方案取舍             | `docs/src/adr/`     |
-| `/mdnote <想法描述>`      | 记录记录想法、思路或待探索的方向             | `docs/src/notes/`     |
+| `/mdinit`   | 项目首次初始化 mdBook 文档结构，在手动执行 `mdbook init` 之后调用 | `<mdbook-root>/`  |
+| `/mdplan <功能描述>`     | 写代码前，先出方案                 | `<mdbook-root>/src/plan/`    |
+| `/mdreview <文件或模块>` | 审查代码质量，无参数则审查最近变更 | `<mdbook-root>/src/review/`  |
+| `/mdexplain`             | 记录刚实施完的改动                 | `<mdbook-root>/src/explain/` |
+| `/mdlearn <文件或概念>`  | 理解某段代码或架构怎么工作         | `<mdbook-root>/src/learn/`   |
+| `/mdadr <决策描述>`      | 记录技术选型和方案取舍             | `<mdbook-root>/src/adr/`     |
+| `/mdnote <想法描述>`      | 记录记录想法、思路或待探索的方向             | `<mdbook-root>/src/notes/`     |
 
 **所有文档 skill 执行完后都会停止，等待你确认，不会自动改代码。**
 
@@ -75,7 +93,7 @@ mdbook serve docs
 /mdnote 我在想 xxx 是不是可以 xxx ，先记下来之后验证。
 
 # 新项目接入
-# 先在 docs/ 目录执行 mdbook init，然后：
+# 先在 docs/ 或 docs/<自定义名称>/ 目录执行 mdbook init，然后：
 /mdinit
 ```
 
