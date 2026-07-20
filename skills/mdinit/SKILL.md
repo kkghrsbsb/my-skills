@@ -60,30 +60,14 @@ git-repository-url = "<上一步获取的 URL>"
 
 ### 5. 生成 <mdbook-root>/src/README.md
 
-结合用户调用此 skill 时提供的背景说明、项目根目录 `README.md`（若存在）、常见项目清单文件（如 `package.json`、`Cargo.toml`、`pyproject.toml`、`go.mod`）和顶层目录结构，生成 `<mdbook-root>/src/README.md`。
+创建 `<mdbook-root>/src/README.md`，只写项目标题。项目名优先使用用户明确提供的名称，否则使用项目根目录名称。
 
-`<mdbook-root>/src/README.md` 是 mdBook 文档集首页，用来说明这套文档当下服务的工作目标和项目背景，不是 agent 理解项目时必须先看的规则入口。不要把 AGENTS.md、CLAUDE.md、长期维护规则或文档导航重复搬进这里。
-
-生成内容用中文，格式如下：
+文件内容必须严格保持为：
 ```markdown
 # <项目名>
-
-> **原始 Prompt**
->
-> <逐字记录触发此 skill 的完整用户消息，保留原始换行>
-
-<项目背景或一句话简介>
-
-## 当前目标
-
-<用户本次建立文档的原因和目标；若用户未说明则写 TODO>
-
-## 项目概览
-
-<!-- TODO -->
 ```
 
-原始 Prompt 只记录用户消息，不改写、不总结，也不要包含 system、developer 或其他上下文消息。
+不要添加原始 Prompt、项目简介、当前目标、项目概览、文档导航、维护规则或占位内容。
 
 ### 6. 重置 <mdbook-root>/src/SUMMARY.md
 
