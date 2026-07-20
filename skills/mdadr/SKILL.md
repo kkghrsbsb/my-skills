@@ -5,6 +5,10 @@ description: Write an Architecture Decision Record documenting why a technical d
 
 按以下步骤执行：
 
+**记录原始 Prompt：**
+- 在 ADR 主标题之后、正文之前添加 `> **原始 Prompt**` 引用块
+- 逐字记录触发此 skill 的完整用户消息，保留原始换行，不改写、不总结；不要包含 system、developer 或其他上下文消息
+
 **定位 mdBook 根目录：**
 - 先查找当前项目的 mdBook 根目录，可能是 `docs/`，也可能是 `docs/<自定义名称>/`
 - 有且只有一个候选时使用该目录；若多个候选同时存在，询问用户选择
@@ -21,6 +25,7 @@ description: Write an Architecture Decision Record documenting why a technical d
 2. 找到项目文档目录：使用 `<mdbook-root>/src/adr/`，若不存在则创建该目录。
 3. 创建 ADR 文档，文件名必须使用当天日期前缀 `YYYY-MM-DD-`、三位序号和 kebab-case 主题，如 `2026-04-24-001-use-dora-rs-over-ros2.md`，内容包含：
 
+   - **原始 Prompt 引用块**：紧跟主标题，格式遵循上述“记录原始 Prompt”规则
    - **状态**：`已采纳` / `已替代` / `草稿`
    - **背景**：为什么需要做这个决策，当时面临什么问题或约束
    - **评估的选项**：列出考虑过的所有备选方案（至少两个），每个方案说明优缺点

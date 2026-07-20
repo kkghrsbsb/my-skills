@@ -29,6 +29,7 @@ description: Write a code review document for specified files or recent changes.
    - 可维护性风险
 3. 找到项目文档目录：使用 `<mdbook-root>/src/review/`，若不存在则创建该目录。
 4. 创建 review 文档，文件名必须使用当天日期前缀 `YYYY-MM-DD-` 加 kebab-case 主题，如 `2026-04-24-auth-module-review.md`，内容包含：
+   - 原始 Prompt 引用块：紧跟主标题，先写 `> **原始 Prompt**`，再逐字引用触发此 skill 的完整用户消息，保留原始换行，不改写、不总结；不要包含 system、developer 或其他上下文消息
    - 审查范围
    - 发现的问题（按严重程度排序）
    - 具体修改建议

@@ -9,6 +9,7 @@ description: Summarize code changes into a documented explanation. Triggers on r
 1. 阅读相关变更文件或指定代码。
 2. 找到项目文档目录：使用 `<mdbook-root>/src/explain/`，若不存在则创建该目录。
 3. 创建说明文档，文件名必须使用当天日期前缀 `YYYY-MM-DD-` 加 kebab-case 主题，如 `2026-04-24-user-auth-explain.md`，内容包含：
+   - 原始 Prompt 引用块：紧跟主标题，先写 `> **原始 Prompt**`，再逐字引用触发此 skill 的完整用户消息，保留原始换行，不改写、不总结；不要包含 system、developer 或其他上下文消息
    - 改动了什么
    - 为什么改动
    - 影响了哪些部分

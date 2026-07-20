@@ -9,6 +9,7 @@ description: Write a learning guide explaining how code or architecture works. T
 1. 阅读指定的代码文件、模块或架构相关文件。
 2. 找到项目文档目录：使用 `<mdbook-root>/src/learn/`，若不存在则创建该目录。
 3. 创建学习指南文档，文件名必须使用当天日期前缀 `YYYY-MM-DD-` 加 kebab-case 主题，如 `2026-04-24-dataflow-arch-learn.md`，内容围绕"理解"而非"记录变更"，包含：
+   - **原始 Prompt 引用块**：紧跟主标题，先写 `> **原始 Prompt**`，再逐字引用触发此 skill 的完整用户消息，保留原始换行，不改写、不总结；不要包含 system、developer 或其他上下文消息
    - **是什么**：概念或模块的定义和职责
    - **为什么这样设计**：设计动机、权衡和背景
    - **怎么工作的**：核心流程、关键路径、数据流向

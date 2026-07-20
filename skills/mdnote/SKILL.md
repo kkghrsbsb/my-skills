@@ -9,6 +9,7 @@ description: Write a personal note capturing ideas, thoughts, prompts, or explor
 1. 接收用户的想法、思路或 prompt，不做评价，不主动扩展，忠实记录用户的原始表达。
 2. 找到项目文档目录：使用 `<mdbook-root>/src/notes/`，若不存在则创建该目录。
 3. 创建笔记文档，文件名必须使用当天日期前缀 `YYYY-MM-DD-` 加 kebab-case 主题，如 `2026-04-24-mujoco-control-rate-idea.md`，内容包含：
+   - **原始 Prompt 引用块**：紧跟主标题，先写 `> **原始 Prompt**`，再逐字引用触发此 skill 的完整用户消息，保留原始换行，不改写、不总结；不要包含 system、developer 或其他上下文消息
    - **想法**：用户的原始描述，保持原意，不改写
    - **背景**（可选）：若用户提供了上下文，简要记录
    - **待探索的问题**（可选）：从想法中自然延伸出的开放性问题，若用户没有提及则留空

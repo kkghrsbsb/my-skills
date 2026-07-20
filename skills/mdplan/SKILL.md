@@ -20,6 +20,7 @@ description: Write a feature plan document before touching any code. Triggers on
 1. 理解功能需求：澄清预期行为、受影响的模块、输入输出、潜在风险和权衡。
 2. 找到项目文档目录：使用 `<mdbook-root>/src/plan/`，若不存在则创建该目录。
 3. 创建 plan 文档，文件名必须使用当天日期前缀 `YYYY-MM-DD-` 加 kebab-case 主题，如 `2026-04-24-user-auth-plan.md`，内容包含：
+   - 原始 Prompt 引用块：紧跟主标题，先写 `> **原始 Prompt**`，再逐字引用触发此 skill 的完整用户消息，保留原始换行，不改写、不总结；不要包含 system、developer 或其他上下文消息
    - 功能目标
    - 当前问题或动机
    - 方案设计

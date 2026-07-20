@@ -1,6 +1,6 @@
 ---
 name: mdinit
-description: Initialize mdBook documentation structure after the user has run `mdbook init`. Supports either docs/ or an isolated docs/<namespace>/ book root.
+description: Initialize mdBook documentation structure after the user has run `mdbook init`. Supports either docs/ or an isolated namespaced directory under docs/ as the book root.
 ---
 
 ## 前提条件
@@ -68,6 +68,10 @@ git-repository-url = "<上一步获取的 URL>"
 ```markdown
 # <项目名>
 
+> **原始 Prompt**
+>
+> <逐字记录触发此 skill 的完整用户消息，保留原始换行>
+
 <项目背景或一句话简介>
 
 ## 当前目标
@@ -78,6 +82,8 @@ git-repository-url = "<上一步获取的 URL>"
 
 <!-- TODO -->
 ```
+
+原始 Prompt 只记录用户消息，不改写、不总结，也不要包含 system、developer 或其他上下文消息。
 
 ### 6. 重置 <mdbook-root>/src/SUMMARY.md
 

@@ -1,9 +1,9 @@
 ---
 name: mycommit
-description: Generate a Conventional Commits git commit message in Chinese based on the current diff.
+description: Generate a Chinese Conventional Commits message from the current diff and commit the changes, unless the user explicitly asks not to execute git commit.
 ---
 
-不要执行 git commit，只生成 commit message。
+默认生成 commit message 并执行 `git commit`。只有用户明确要求“不提交”“只生成 commit message”或表达同等含义时，才不得执行 `git commit`。
 
 执行步骤：
 1. 运行 `git diff --cached`，若无内容则运行 `git diff HEAD`，获取当前变更。
@@ -25,5 +25,11 @@ description: Generate a Conventional Commits git commit message in Chinese based
 - body 每条尽量控制在一行内，避免展开实现细节，除非该细节影响使用或风险判断
 - trivial 改动可省略 body
 - 不要编造测试结果
+
+5. 除非用户明确要求不提交，否则执行提交：
+   - 若已有 staged 变更，仅提交 staged 变更，不擅自加入未暂存文件
+   - 若没有 staged 变更，将本次分析范围内的变更加入暂存区，再执行 `git commit`
+   - 使用生成的 subject 和 body 作为完整提交信息，不打开交互式编辑器
+6. 输出最终 commit message；若已提交，同时报告提交哈希。若提交失败，报告原因，不声称提交成功。
 
 $ARGUMENTS
