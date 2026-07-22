@@ -1,39 +1,38 @@
 ---
 name: mdreview
-description: Write a code review document for specified files or recent changes. Triggers on requests to review, audit, or inspect code.
+description: Write a concise, evidence-based code review for specified files or recent changes. Use when the user asks to review, audit, or inspect code.
 ---
 
 先不要改代码。
 
-**定位 mdBook 根目录：**
-- 先查找当前项目的 mdBook 根目录，可能是 `docs/`，也可能是 `docs/<自定义名称>/`
-- 有且只有一个候选时使用该目录；若多个候选同时存在，询问用户选择
-- 后续所有文档路径都基于 `<mdbook-root>/src/`，不要默认写死为 `docs/src/`
+1. 读取并遵守 `../_shared/chinese-engineering-writing.md`。
+2. 定位 mdBook 根目录。候选可以是 `docs/` 或 `docs/<自定义名称>/`，且必须同时包含 `book.toml` 和 `src/`。只有一个候选时使用该目录；有多个候选时询问用户。后续路径都基于 `<mdbook-root>/src/`。
+3. 确定审查范围：
+   - 有参数时，以指定文件或模块为准。
+   - 无参数时，运行 `git diff HEAD --name-only`，以最近变更为范围。
+   - 无参数且 diff 为空时，要求用户指定范围，然后停止。
+4. 阅读范围内的代码、关联模块、测试和当前行为。基于证据识别逻辑错误、脆弱假设、缺失校验、结构问题、死代码、性能问题和可维护性风险。
+5. 在 `<mdbook-root>/src/review/` 创建审查文档。文件名使用当天日期前缀和 kebab-case 主题，例如 `2026-04-24-auth-module-review.md`。
 
-**确定审查范围：**
-- 若有参数，以参数指定的文件或模块为准
-- 若无参数，运行 `git diff HEAD --name-only` 获取最近变更的文件列表，以这些文件为审查范围
-- 若 diff 为空且无参数，提示用户说明要审查的文件或模块，停止执行
+文档按以下顺序组织：
 
-按以下步骤执行：
+1. **审查结论**：前置说明是否存在明确问题。
+2. **审查范围**：列出实际阅读的文件、diff 或模块。
+3. **问题统计**：按阻断、严重、一般、建议统计数量。
+4. **问题明细**：按严重程度排序。每个问题固定使用以下字段：
+   - 严重程度：只允许“阻断”“严重”“一般”“建议”；
+   - 位置：文件路径、关键符号和必要行号；
+   - 证据；
+   - 影响；
+   - 建议修改；
+   - 验证方式。
+5. **建议处理顺序**：按依赖和风险给出顺序，不重复问题全文。
+6. **未覆盖范围**：明确未阅读、未运行或无法确认的部分。
+7. **原始请求**：按共享规范折叠放在文末。
 
-1. 阅读审查范围内的代码文件、关联模块和现有行为。
-2. 识别以下类型的问题：
-   - 逻辑错误
-   - 脆弱的假设
-   - 缺失的校验
-   - 结构不合理
-   - 命名不清晰
-   - 死代码
-   - 性能问题
-   - 可维护性风险
-3. 找到项目文档目录：使用 `<mdbook-root>/src/review/`，若不存在则创建该目录。
-4. 创建 review 文档，文件名必须使用当天日期前缀 `YYYY-MM-DD-` 加 kebab-case 主题，如 `2026-04-24-auth-module-review.md`，内容包含：
-   - 原始 Prompt 引用块：紧跟主标题，先写 `> **原始 Prompt**`，再逐字引用触发此 skill 的完整用户消息，保留原始换行，不改写、不总结；不要包含 system、developer 或其他上下文消息
-   - 审查范围
-   - 发现的问题（按严重程度排序）
-   - 具体修改建议
-5. 更新 `<mdbook-root>/src/SUMMARY.md`：保留 `- [审查报告]()` 分类标题不变，在其下面添加二级子项链接，例如 `  - [认证模块审查](./review/2026-04-24-auth-module-review.md)`。不要把 `- [审查报告]()` 本身替换成文档链接，也不要在末尾追加孤立条目。
-6. 写完后停止，等待用户确认，不得主动开始改代码。
+没有发现问题时，明确写“在本次审查范围内未发现明确问题”，并说明未覆盖范围。不要为了填充报告而虚构问题；没有实质内容的“问题明细”和“建议处理顺序”直接省略。
+
+6. 更新 `<mdbook-root>/src/SUMMARY.md`。保留 `- [审查报告]()` 分类标题，在其下添加二级子项，例如 `  - [认证模块审查](./review/2026-04-24-auth-module-review.md)`。不要替换分类标题，也不要追加孤立条目。
+7. 写完后停止，等待用户确认。不得主动修改代码。
 
 $ARGUMENTS

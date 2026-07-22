@@ -1,46 +1,32 @@
 ---
 name: mdadr
-description: Write an Architecture Decision Record documenting why a technical decision was made. Triggers on requests to record, document, or explain a design choice or technical tradeoff.
+description: Write a concise Architecture Decision Record with options, tradeoffs, and reevaluation conditions. Use when the user asks to record or explain a technical decision.
 ---
 
 按以下步骤执行：
 
-**记录原始 Prompt：**
-- 在 ADR 主标题之后、正文之前添加 `> **原始 Prompt**` 引用块
-- 逐字记录触发此 skill 的完整用户消息，保留原始换行，不改写、不总结；不要包含 system、developer 或其他上下文消息
+1. 读取并遵守 `../_shared/chinese-engineering-writing.md`。
+2. 定位 mdBook 根目录。候选可以是 `docs/` 或 `docs/<自定义名称>/`，且必须同时包含 `book.toml` 和 `src/`。只有一个候选时使用该目录；有多个候选时询问用户。后续路径都基于 `<mdbook-root>/src/`。
+3. 扫描 `<mdbook-root>/src/adr/`，检查同主题决策：
+   - 若存在，询问用户是修订原决策，还是记录替代旧决策的新 ADR。
+   - 若新 ADR 替代旧决策，在新文档中链接旧文件，并在旧文件开头添加 `> ⚠️ 此决策已被 [xxx-adr.md](../adr/xxx-adr.md) 替代`。不要删除旧文件。
+4. 阅读决策当时的用户描述、约束和必要代码或配置。不要用当前视角虚构当时不存在的因素。
+5. 在 `<mdbook-root>/src/adr/` 创建 ADR。文件名使用当天日期、三位序号和 kebab-case 主题，例如 `2026-04-24-001-use-dora-rs-over-ros2.md`。
 
-**定位 mdBook 根目录：**
-- 先查找当前项目的 mdBook 根目录，可能是 `docs/`，也可能是 `docs/<自定义名称>/`
-- 有且只有一个候选时使用该目录；若多个候选同时存在，询问用户选择
-- 后续所有文档路径都基于 `<mdbook-root>/src/`，不要默认写死为 `docs/src/`
+文档按以下顺序组织：
 
-**检查是否已有同主题文档：**
-- 扫描 `<mdbook-root>/src/adr/` 下已有文件，判断是否存在同主题的 ADR 文档
-- 若存在，询问用户：是补充修订原决策，还是记录一个推翻旧决策的新决策？
-- 若是推翻旧决策，在新 ADR 中注明被替代的旧文件，同时在旧文件头部追加一行标注：`> ⚠️ 此决策已被 [xxx-adr.md](../adr/xxx-adr.md) 替代`，不删除旧文件
+1. **决策**：开头直接写最终选择。
+2. **状态**：只使用“草稿”“已采纳”或“已替代”。
+3. **决定因素**：列出推动选择的关键条件。
+4. **背景与约束**：只保留理解决策所需的上下文。
+5. **选项对比**：使用表格比较方案、优点、缺点和放弃原因；至少包含两个真实选项。
+6. **选择理由**：说明所选方案如何满足决定因素。
+7. **后果与代价**：同时记录正面影响、负面影响和需要接受的权衡。
+8. **重新评估条件**：说明哪些约束、规模、成本或能力发生变化时应重新决策。
+9. **相关文档**：链接被替代 ADR、plan、learn 或外部依据。
+10. **原始请求**：按共享规范折叠放在文末。
 
-按以下步骤执行：
-
-1. 了解决策背景：阅读用户描述，必要时读取少量相关代码或配置文件，不做全项目扫描。
-2. 找到项目文档目录：使用 `<mdbook-root>/src/adr/`，若不存在则创建该目录。
-3. 创建 ADR 文档，文件名必须使用当天日期前缀 `YYYY-MM-DD-`、三位序号和 kebab-case 主题，如 `2026-04-24-001-use-dora-rs-over-ros2.md`，内容包含：
-
-   - **原始 Prompt 引用块**：紧跟主标题，格式遵循上述“记录原始 Prompt”规则
-   - **状态**：`已采纳` / `已替代` / `草稿`
-   - **背景**：为什么需要做这个决策，当时面临什么问题或约束
-   - **评估的选项**：列出考虑过的所有备选方案（至少两个），每个方案说明优缺点
-   - **决策**：最终选择了什么
-   - **理由**：选择该方案的核心原因，以及放弃其他方案的具体原因
-   - **后果**：这个决策带来的影响，包括正面影响、负面影响、需要接受的权衡
-   - **相关文档**（可选）：关联的 plan、learn 或外部参考链接
-
-4. 更新 `<mdbook-root>/src/SUMMARY.md`：保留 `- [决策记录]()` 分类标题不变，在其下面添加二级子项链接，例如 `  - [采用 Dora RS 决策](./adr/2026-04-24-001-use-dora-rs-over-ros2.md)`。不要把 `- [决策记录]()` 本身替换成文档链接，也不要在末尾追加孤立条目。
-5. 写完后停止，除非用户明确要求继续。
-
-**写作原则：**
-- ADR 记录的是"当时为什么这么决定"，要还原决策时的上下文和约束，而不是用现在的视角重新评价
-- 评估的选项必须诚实列出被放弃的方案及原因，这是 ADR 最核心的价值
-- 不预设读者了解背景，写给六个月后的自己看
-- 中文写作
+6. 更新 `<mdbook-root>/src/SUMMARY.md`。保留 `- [决策记录]()` 分类标题，在其下添加二级子项，例如 `  - [采用 Dora RS 决策](./adr/2026-04-24-001-use-dora-rs-over-ros2.md)`。不要替换分类标题，也不要追加孤立条目。
+7. 写完后停止，除非用户明确要求继续。
 
 $ARGUMENTS

@@ -1,28 +1,29 @@
 ---
 name: mdlearn
-description: Write a learning guide explaining how code or architecture works. Triggers on requests to understand, learn, or get an explanation of how something is designed.
+description: Write a concise learning guide that builds a working model of code or architecture. Use when the user asks to understand, learn, or explain how something is designed.
 ---
 
 按以下步骤执行：
 
-0. 定位 mdBook 根目录：先查找当前项目的 mdBook 根目录，可能是 `docs/`，也可能是 `docs/<自定义名称>/`；有且只有一个候选时使用该目录，若多个候选同时存在，询问用户选择。后续所有文档路径都基于 `<mdbook-root>/src/`，不要默认写死为 `docs/src/`。
-1. 阅读指定的代码文件、模块或架构相关文件。
-2. 找到项目文档目录：使用 `<mdbook-root>/src/learn/`，若不存在则创建该目录。
-3. 创建学习指南文档，文件名必须使用当天日期前缀 `YYYY-MM-DD-` 加 kebab-case 主题，如 `2026-04-24-dataflow-arch-learn.md`，内容围绕"理解"而非"记录变更"，包含：
-   - **原始 Prompt 引用块**：紧跟主标题，先写 `> **原始 Prompt**`，再逐字引用触发此 skill 的完整用户消息，保留原始换行，不改写、不总结；不要包含 system、developer 或其他上下文消息
-   - **是什么**：概念或模块的定义和职责
-   - **为什么这样设计**：设计动机、权衡和背景
-   - **怎么工作的**：核心流程、关键路径、数据流向
-   - **关键代码解读**：重要片段的逐步说明
-   - **常见误区或注意点**：容易搞错的地方
-   - **延伸阅读**（若存在明显相关模块或外部概念时补充）
-4. 更新 `<mdbook-root>/src/SUMMARY.md`：保留 `- [学习笔记]()` 分类标题不变，在其下面添加二级子项链接，例如 `  - [数据流架构学习笔记](./learn/2026-04-24-dataflow-arch-learn.md)`。不要把 `- [学习笔记]()` 本身替换成文档链接，也不要在末尾追加孤立条目。
-5. 写完后停止，除非用户明确要求继续。
+1. 读取并遵守 `../_shared/chinese-engineering-writing.md`。
+2. 定位 mdBook 根目录。候选可以是 `docs/` 或 `docs/<自定义名称>/`，且必须同时包含 `book.toml` 和 `src/`。只有一个候选时使用该目录；有多个候选时询问用户。后续路径都基于 `<mdbook-root>/src/`。
+3. 阅读指定代码、模块、配置和必要的关联文件。默认读者熟悉基本编程，但第一次接触当前项目。
+4. 在 `<mdbook-root>/src/learn/` 创建学习文档。文件名使用当天日期前缀和 kebab-case 主题，例如 `2026-04-24-dataflow-arch-learn.md`。
 
-**写作原则：**
-- 面向"第一次接触这段代码的人"，不预设读者已有背景知识
-- 优先解释"为什么"，而不只是"是什么"
-- 用类比或示意说明复杂概念，避免纯罗列代码
-- 中文写作
+文档按以下顺序组织：
+
+1. **30 秒理解**：用最短内容说明模块职责、边界和核心机制。
+2. **输入、处理和输出**：明确数据或控制从哪里来、如何变化、到哪里去。
+3. **核心调用链或数据流**：先建立整体模型；复杂关系使用 Mermaid 图。
+4. **关键文件和符号**：列出理解模块所需的路径、类、函数、结构体或配置项。
+5. **为什么这样设计**：只解释与当前设计直接相关的动机和取舍。
+6. **容易误解的点**：说明名称、边界或行为上容易产生的错误认识。
+7. **进一步查看的位置**：链接相关文件、测试或文档。
+8. **原始请求**：按共享规范折叠放在文末。
+
+不要从通用计算机基础开始讲解，不默认写成完整教程，不逐行解释普通样板代码。只解释理解当前模块所必需的背景。用户明确要求深入学习时，才扩展原理和示例。
+
+5. 更新 `<mdbook-root>/src/SUMMARY.md`。保留 `- [学习笔记]()` 分类标题，在其下添加二级子项，例如 `  - [数据流架构学习笔记](./learn/2026-04-24-dataflow-arch-learn.md)`。不要替换分类标题，也不要追加孤立条目。
+6. 写完后停止，除非用户明确要求继续。
 
 $ARGUMENTS

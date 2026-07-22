@@ -16,6 +16,8 @@ description: Initialize mdBook documentation structure after the user has run `m
 
 不要自行执行 `mdbook init`。可以轻量粗读项目元信息和顶层结构，但不要做深度源码分析或全项目扫描。
 
+执行前读取并遵守 `../_shared/chinese-engineering-writing.md`。共享规范属于已安装 skill，不要把它复制到项目的 mdBook 目录。若共享文件不存在，停止并提示用户重新运行本仓库的安装脚本。
+
 ---
 
 ## 执行步骤
@@ -67,7 +69,7 @@ git-repository-url = "<上一步获取的 URL>"
 # <项目名>
 ```
 
-不要添加原始 Prompt、项目简介、当前目标、项目概览、文档导航、维护规则或占位内容。
+README 是结构首页，不套用共享规范的文档模板。不要添加原始 Prompt、项目简介、当前目标、项目概览、文档导航、维护规则或占位内容。
 
 ### 6. 重置 <mdbook-root>/src/SUMMARY.md
 

@@ -9,6 +9,7 @@
 ## Documentation Rules
 - The mdBook root may be `docs/` or an isolated personal directory such as `docs/<name>/`.
 - Before writing documentation, locate the active mdBook root by checking for `book.toml` and `src/`; if multiple candidates exist, ask which one to use.
+- When using an installed `md*` documentation skill, read and follow its bundled `../_shared/chinese-engineering-writing.md`; do not duplicate that writing standard here or copy it into the project mdBook.
 - `<mdbook-root>/src/README.md` is only the mdBook homepage for the current documentation context, not an agent instruction file.
 - Keep agent operating rules in AGENTS.md or CLAUDE.md, not in `<mdbook-root>/src/README.md`.
 - When changing Markdown files under `<mdbook-root>/src/`, update `<mdbook-root>/src/SUMMARY.md` in the same task.
