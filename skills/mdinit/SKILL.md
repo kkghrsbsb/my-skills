@@ -18,6 +18,8 @@ description: Initialize mdBook documentation structure after the user has run `m
 
 执行前读取并遵守 `../_shared/chinese-engineering-writing.md`。共享规范属于已安装 skill，不要把它复制到项目的 mdBook 目录。若共享文件不存在，停止并提示用户重新运行本仓库的安装脚本。
 
+不要在初始化阶段运行 `mdbook-mermaid install`。后续文档确实需要 Mermaid 时，再按共享规范检查环境并按需启用。
+
 ---
 
 ## 执行步骤

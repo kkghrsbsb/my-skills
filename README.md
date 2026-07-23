@@ -60,6 +60,7 @@ mdbook serve docs/<自定义名称>
 - 结论前置，计划、现状、已实现和已验证事实明确区分。
 - 涉及实现的结论尽量附文件路径、关键符号和验证结果。
 - 详细背景和原理按需展开，不重复已有文档。
+- Mermaid 仅用于确实需要可视化的复杂关系，使用前检查环境，缺失时降级为普通 Markdown。
 - 完整原始 Prompt 折叠放在文末，不占用正文首屏。
 
 所有文档 skill 共享 [中文工程文档写作规范](./skills/_shared/chinese-engineering-writing.md)。各 `SKILL.md` 只保留自身职责和模板差异。
