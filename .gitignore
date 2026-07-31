@@ -3,9 +3,9 @@
 .vscode/
 
 # agents
-.claude/
-.codex/
-.agents/
+/.claude/
+/.codex/
+/.agents/
 
 # Python-generated files
 __pycache__/

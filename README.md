@@ -7,9 +7,13 @@
 ```text
 .
 ├── project/
-│   └── skills/
-│       ├── _shared/
-│       └── md*/
+│   └── mdbook-docs/
+│       ├── .agents/
+│       │   └── skills/
+│       │       ├── _shared/
+│       │       └── md*/
+│       ├── AGENTS.md
+│       └── CLAUDE.md
 └── user/
     └── skills/
         └── mycommit/
@@ -17,14 +21,14 @@
 
 ## 使用方式
 
-将项目级 skills 复制到目标项目的 `.agents/`：
+将 mdBook 文档工作流包复制到目标项目：
 
 ```bash
-cp -R project/skills <目标项目>/.agents/
+cp -R project/mdbook-docs/. <目标项目>/
 ```
 
-这会生成 `<目标项目>/.agents/skills/`。复制整个目录，以保留共享规范和
-skill 自带的脚本。
+工作流包包含 `.agents/skills/`、`AGENTS.md` 和 `CLAUDE.md`。复制前检查
+目标项目是否已有同名规则文件，避免覆盖项目现有约定。
 
 `mycommit` 是用户级 skill，按需复制到所用工具的用户 skills 目录：
 
@@ -80,7 +84,7 @@ mdbook serve docs/<自定义名称>
 - 完整原始 Prompt 折叠放在文末，不占用正文首屏。
 
 所有文档 skill 共享
-[中文工程文档写作规范](./project/skills/_shared/chinese-engineering-writing.md)。
+[中文工程文档写作规范](./project/mdbook-docs/.agents/skills/_shared/chinese-engineering-writing.md)。
 各 `SKILL.md` 只保留自身职责和模板差异。
 
 ### 文档工作流

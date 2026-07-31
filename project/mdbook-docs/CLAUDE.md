@@ -1,10 +1,4 @@
-# 个人 AGENTS.md 模板
-
-这是个人通用文档工作流模板。优先放在 `.codex/AGENTS.md` 这类个人 agent 配置目录中；只有当项目团队也接受这套规则时，才放到仓库根目录 `AGENTS.md`。
-
-复制下面的内容到个人或项目级 AGENTS.md 作为初始
-
-# AGENTS.md
+# CLAUDE.md
 
 ## Documentation Rules
 - The mdBook root may be `docs/` or an isolated personal directory such as `docs/<name>/`.
