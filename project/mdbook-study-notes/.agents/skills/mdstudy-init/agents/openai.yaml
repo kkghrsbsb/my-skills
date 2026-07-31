@@ -1,0 +1,4 @@
+interface:
+  display_name: "学习笔记初始化"
+  short_description: "检查工具环境并初始化图片优先的 mdBook 个人学习笔记项目"
+  default_prompt: "使用 $mdstudy-init 创建一个用于记录机器人学学习笔记的 mdBook 项目。"

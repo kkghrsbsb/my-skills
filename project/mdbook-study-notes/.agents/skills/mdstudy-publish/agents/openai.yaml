@@ -1,0 +1,4 @@
+interface:
+  display_name: "学习笔记发布"
+  short_description: "构建、规范提交并推送学习笔记，不等待异步 Pages 部署状态"
+  default_prompt: "使用 $mdstudy-publish 构建、提交并推送当前学习笔记。"

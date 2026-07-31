@@ -1,0 +1,4 @@
+interface:
+  display_name: "学习笔记整理"
+  short_description: "重组 mdBook 学习笔记目录，并校验 SUMMARY 和图片链接"
+  default_prompt: "使用 $mdstudy-organize 整理当前笔记目录和 SUMMARY。"

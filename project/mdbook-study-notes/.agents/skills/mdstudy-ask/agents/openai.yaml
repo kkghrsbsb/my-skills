@@ -1,0 +1,4 @@
+interface:
+  display_name: "笔记内容问答"
+  short_description: "读取并分析已有手写图片笔记，回答研究与课程内容问题"
+  default_prompt: "使用 $mdstudy-ask 根据现有手写笔记解释这个问题。"

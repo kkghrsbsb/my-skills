@@ -1,0 +1,4 @@
+interface:
+  display_name: "学习笔记管理"
+  short_description: "按原始顺序导入手写图片并维护 mdBook 学习笔记章节"
+  default_prompt: "使用 $mdstudy-note 将这些手写笔记图片按顺序加入合适的章节。"
