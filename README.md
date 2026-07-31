@@ -1,26 +1,42 @@
 # my-skills
 
-个人 skills 仓库，管理和备份个人 Claude Code / Codex skills。
+个人 skills 仓库。项目级文档 skills 与用户级通用 skills 分开管理。
 
-## 安装
+## 目录结构
 
-```bash
-# 安装到 Claude Code
-python3 install_claude.py
-
-# 安装到 Codex
-python3 install_codex.py
+```text
+.
+├── project/
+│   └── skills/
+│       ├── _shared/
+│       └── md*/
+└── user/
+    └── skills/
+        └── mycommit/
 ```
 
-默认安装位置：
+## 使用方式
 
-- Claude Code: `~/.claude/skills/`
-- Codex: `~/.codex/skills/`
+将项目级 skills 复制到目标项目的 `.agents/`：
 
-可通过环境变量覆盖安装根目录：
+```bash
+cp -R project/skills <目标项目>/.agents/
+```
 
-- Claude Code: `CLAUDE_HOME`
-- Codex: `CODEX_HOME`
+这会生成 `<目标项目>/.agents/skills/`。复制整个目录，以保留共享规范和
+skill 自带的脚本。
+
+`mycommit` 是用户级 skill，按需复制到所用工具的用户 skills 目录：
+
+```bash
+# Codex
+mkdir -p ~/.codex/skills
+cp -R user/skills/mycommit ~/.codex/skills/
+
+# Claude Code
+mkdir -p ~/.claude/skills
+cp -R user/skills/mycommit ~/.claude/skills/
+```
 
 ## mdBook 项目文档管理
 
@@ -63,7 +79,9 @@ mdbook serve docs/<自定义名称>
 - Mermaid 仅用于确实需要可视化的复杂关系，使用前检查环境，缺失时降级为普通 Markdown。
 - 完整原始 Prompt 折叠放在文末，不占用正文首屏。
 
-所有文档 skill 共享 [中文工程文档写作规范](./skills/_shared/chinese-engineering-writing.md)。各 `SKILL.md` 只保留自身职责和模板差异。
+所有文档 skill 共享
+[中文工程文档写作规范](./project/skills/_shared/chinese-engineering-writing.md)。
+各 `SKILL.md` 只保留自身职责和模板差异。
 
 ### 文档工作流
 
