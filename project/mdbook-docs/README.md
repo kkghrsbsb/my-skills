@@ -18,10 +18,10 @@ cp -R project/mdbook-docs/.agents \
 ## 初始化 mdBook
 
 ```bash
-# 传统模式
 cargo install mdbook
-cd docs
-mdbook init
+
+# 在项目根目录调用，必须明确给出初始化位置
+/mdinit docs/
 
 # 从项目根目录预览
 mdbook serve docs
@@ -30,15 +30,13 @@ mdbook serve docs
 在 fork 或协作项目中，推荐使用个人隔离目录，避免占用项目正式 `docs/`：
 
 ```bash
-mkdir -p docs/<自定义名称>
-cd docs/<自定义名称>
-mdbook init
+/mdinit docs/<自定义名称>/
 
 # 从项目根目录预览
 mdbook serve docs/<自定义名称>
 ```
 
-文档 skills 会先定位 mdBook 根目录。根目录可以是 `docs/` 或 `docs/<自定义名称>/`；同时存在多个候选时会先询问用户。
+`mdinit` 会执行 `mdbook init` 并建立文档分类。若用户未告知初始化位置，`mdinit` 会暂停并请用户明确指定，不会默认使用 `docs/`。其他文档 skills 会先定位已初始化的 mdBook 根目录；同时存在多个候选时会先询问用户。
 
 忽略策略按项目关系选择：
 
@@ -60,7 +58,7 @@ mdbook serve docs/<自定义名称>
 
 | 命令 | 用途 | 输出位置 |
 | --- | --- | --- |
-| `/mdinit` | 在手动执行 `mdbook init` 后建立文档分类和导航 | `<mdbook-root>/` |
+| `/mdinit <docs 路径>` | 在指定位置初始化 mdBook 并建立文档分类和导航 | `<mdbook-root>/` |
 | `/mdplan <功能描述>` | 在改代码前记录推荐方案、实施清单和验收条件 | `<mdbook-root>/src/plan/` |
 | `/mdexplain` | 根据实际 diff 记录最终行为、改动证据和验证结果 | `<mdbook-root>/src/explain/` |
 | `/mdreview <文件或模块>` | 按严重程度记录有证据的代码问题和验证方式 | `<mdbook-root>/src/review/` |
@@ -93,8 +91,11 @@ mdbook serve docs/<自定义名称>
 /mdnote 我在想 xxx 是不是可以 xxx，先记下来之后验证。
 
 # 新项目接入
-# 先在 docs/ 或 docs/<自定义名称>/ 目录执行 mdbook init
-/mdinit
+# 正式项目文档
+/mdinit docs/
+
+# fork 或协作仓库的隔离文档
+/mdinit docs/<自定义名称>/
 ```
 
 ## 文件命名规范

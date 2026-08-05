@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -35,40 +36,52 @@ def fail(message: str) -> "NoReturn":
     raise SystemExit(2)
 
 
-def is_book_root(path: Path) -> bool:
-    return (path / "book.toml").is_file() and (path / "src").is_dir()
+def command_version(command: str) -> str:
+    result = subprocess.run(
+        [command, "--version"], check=False, capture_output=True, text=True
+    )
+    output = (result.stdout or result.stderr).strip()
+    return output.splitlines()[0] if output else "未知版本"
 
 
-def find_book_root(repo_root: Path, requested: str | None) -> Path:
-    docs = repo_root / "docs"
-    if requested:
-        candidate = Path(requested)
-        if not candidate.is_absolute():
-            candidate = repo_root / candidate
-            if len(Path(requested).parts) == 1:
-                candidate = docs / requested
-        candidate = candidate.resolve()
-        if not is_book_root(candidate):
-            fail(f"{candidate} 不是 mdBook 根目录（需要 book.toml 和 src/）")
-        return candidate
-
-    candidates: list[Path] = []
-    if is_book_root(docs):
-        candidates.append(docs)
-    if docs.is_dir():
-        candidates.extend(
-            path.parent
-            for path in sorted(docs.glob("*/book.toml"))
-            if is_book_root(path.parent)
-        )
-    if not candidates:
+def resolve_book_root(repo_root: Path, requested: str | None) -> Path:
+    if not requested or not requested.strip():
         fail(
-            "未找到 mdBook。请先在 docs/ 或 docs/<名称>/ 中运行 mdbook init"
+            "未指定 mdBook 初始化位置。"
+            "请用 --book-root 明确指定 docs/ 或 docs/<自定义名称>/"
         )
-    if len(candidates) > 1:
-        choices = "\n".join(f"  - {path}" for path in candidates)
-        fail(f"找到多个 mdBook，请用 --book-root 指定：\n{choices}")
-    return candidates[0].resolve()
+
+    docs_root = (repo_root / "docs").resolve()
+    requested_path = Path(requested)
+    candidate = (
+        requested_path.resolve()
+        if requested_path.is_absolute()
+        else (repo_root / requested_path).resolve()
+    )
+    if candidate != docs_root and candidate.parent != docs_root:
+        fail(
+            f"{candidate} 不是允许的初始化位置；"
+            "只能指定 docs/ 或 docs/<自定义名称>/"
+        )
+    return candidate
+
+
+def ensure_uninitialized(book_root: Path) -> None:
+    conflicts = [
+        path
+        for path in (book_root / "book.toml", book_root / "src")
+        if path.exists()
+    ]
+    if conflicts:
+        details = ", ".join(str(path) for path in conflicts)
+        fail(f"目标位置已包含 mdBook 初始化文件：{details}")
+
+
+def run_mdbook(*arguments: str) -> None:
+    try:
+        subprocess.run(["mdbook", *arguments], check=True)
+    except subprocess.CalledProcessError as error:
+        fail(f"mdbook 命令执行失败（退出码 {error.returncode}）")
 
 
 def github_url(repo_root: Path) -> str:
@@ -112,18 +125,29 @@ def main() -> None:
         "--repo-root", default=".", help="repository root (default: current directory)"
     )
     parser.add_argument(
-        "--book-root", help="mdBook root, or a direct child name under docs/"
+        "--book-root", help="required mdBook root: docs/ or docs/<custom-name>/"
     )
     parser.add_argument("--project-name", help="README title (default: repository name)")
     args = parser.parse_args()
 
     repo_root = Path(args.repo_root).resolve()
-    book_root = find_book_root(repo_root, args.book_root)
-    readme = book_root / "src" / "README.md"
-    if readme.exists():
-        fail(f"{readme} 已存在；为避免覆盖，本次未修改任何文件")
+    if not repo_root.is_dir():
+        fail(f"仓库根目录不存在：{repo_root}")
+    book_root = resolve_book_root(repo_root, args.book_root)
+    ensure_uninitialized(book_root)
+    if not shutil.which("mdbook"):
+        fail("缺少必需命令：mdbook。请先安装 mdBook 后重试")
 
     project_name = args.project_name or repo_root.name
+    book_root.mkdir(parents=True, exist_ok=True)
+    run_mdbook(
+        "init",
+        str(book_root),
+        f"--title={project_name}",
+        "--ignore=git",
+    )
+
+    readme = book_root / "src" / "README.md"
     repository_url = github_url(repo_root)
     update_book_toml(book_root / "book.toml", repository_url)
     readme.write_text(f"# {project_name}\n", encoding="utf-8")
@@ -134,13 +158,21 @@ def main() -> None:
         readme,
         book_root / "src" / "SUMMARY.md",
     ]
+    gitignore = book_root / ".gitignore"
+    if gitignore.exists():
+        changed.append(gitignore)
     deleted: list[Path] = []
     default_stub = book_root / "src" / "chapter_1.md"
     if default_stub.exists():
         default_stub.unlink()
         deleted.append(default_stub)
 
+    run_mdbook("build", str(book_root))
+
     print(f"mdBook 初始化完成：{book_root}")
+    print(f"mdbook: {command_version('mdbook')}")
+    print("构建：成功")
+    print(f"构建输出：{book_root / 'book'}")
     for path in changed:
         print(f"修改：{path}")
     for path in deleted:
