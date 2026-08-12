@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex 会话迁移"
+  short_description: "在两台 Linux 开发机之间精确迁移单个 Codex 会话"
+  default_prompt: "使用 $codex-handoff 将指定的单个 Codex 会话安全迁移到目标 SSH 主机。"
