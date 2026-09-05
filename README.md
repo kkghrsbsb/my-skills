@@ -9,32 +9,8 @@
 | [mdBook 项目文档管理](./project/mdbook-docs/README.md) | 2026-08-05 |
 | [mdBook 学习笔记](./project/mdbook-study-notes/README.md) | 2026-07-31 |
 
-## 目录结构
-
-```text
-.
-├── project/
-│   ├── mdbook-docs/
-│       ├── .agents/
-│       │   └── skills/
-│       │       ├── _shared/
-│       │       └── md*/
-│       ├── AGENTS.md
-│       ├── CLAUDE.md
-│       └── README.md
-│   └── mdbook-study-notes/
-│       ├── .agents/skills/
-│       ├── AGENTS.md
-│       ├── CLAUDE.md
-│       └── README.md
-└── user/
-    └── skills/
-        └── mycommit/
-        └── codex-handoff/
-        └── handoff/
-```
-
 ## 项目模板
 
+- [Agent 开发流程](./project/agent-dev-flow/README.md)
 - [mdBook 项目文档管理](./project/mdbook-docs/README.md)
 - [mdBook 学习笔记](./project/mdbook-study-notes/README.md)
