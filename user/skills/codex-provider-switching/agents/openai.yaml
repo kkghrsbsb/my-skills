@@ -1,0 +1,3 @@
+interface:
+  display_name: "Codex Provider Switching"
+  short_description: "Safely configure and switch independent Codex model providers"
