@@ -53,6 +53,18 @@ Treat each provider as a separate conversation boundary.
 - If automation is requested, build an explicit status command and separate switch commands. Make them fail closed when the desktop app is still running, when the target provider is unavailable, or when required credentials are absent. Do not automate force-quitting the app without explicit approval.
 - A CLI profile switch and a Desktop default switch may have different scopes. Explain which client each mechanism affects rather than implying simultaneous hot switching.
 
+### Portable command contract
+
+When the user asks for a consistent cross-machine workflow, provide the same public commands on every supported machine after the discovery, confirmation, backup, and validation steps above:
+
+- `codex-use-official` selects the preserved official provider for the supported Desktop workflow.
+- `codex-use-relay` selects the independently authenticated provider for the supported Desktop workflow.
+- `codex-provider status` reports the active selection without printing credentials.
+
+These names are the user-facing contract, not a mandate for a fixed implementation. Before creating them, discover a suitable user-level executable directory, check the command names are not already owned by another program, and ask before replacing any collision. Generate thin wrappers that locate the current Codex configuration and application at runtime or from detected installation state; do not bake in a home directory, executable location, provider ID, model ID, or secret value.
+
+For Desktop workflows, require a full exit before changing a startup-only setting, do not force-quit the application, and start a new labeled conversation after relaunch. A Relay launcher may obtain a third-party secret through the detected secure mechanism or a no-echo terminal prompt, but must never embed, echo, or persist the secret. Also generate explicit CLI equivalents only when the installed CLI supports the selected mechanism. If a client cannot support this contract safely, create the status command and document the manual, client-specific switching steps instead of simulating a switch.
+
 ## Backup, rollback, and verification
 
 Before changing configuration, create a timestamped, mode-restricted backup of every configuration file that will be modified. Verify the backup parses and contains no secret that was newly introduced. Do not back up or copy credential stores.
