@@ -16,13 +16,17 @@ Keep three layers distinct:
 
 Use direct quotations only when their exact wording matters and preserve context. Otherwise paraphrase faithfully. Never invent a source, locator, access result, quotation, consensus, or citation. Mark missing, conflicting, stale, paywalled, second-hand, or unverified material explicitly. A link alone is often insufficient: record a page, section, figure, timestamp, commit, row range, or other useful locator when the source permits it.
 
-## Cognitive Pace
+## Researcher's Understanding
 
-A complete-looking state file does not prove that the user understands the research. When a data choice, transformation, experiment result, key inference, or decision will constrain later work, create a short cognitive checkpoint: what is believed, why, which evidence or artifacts support it, what would invalidate it, and whether the user marks their understanding `confirmed`, `pending`, or `revisit`.
+At the start of a new topic, first learn what the researcher can already explain. Ask one or two open questions about the central object, proposed method, or evidence before giving a full account when this helps calibrate depth. Basic questions are welcome. Use the user's answers and stated confidence to choose what to explain next; do not turn a request for immediate help into a mandatory quiz.
 
-`pending` and `revisit` are cognitive debt, not failure. Keep them specific enough to study: for example, "cannot explain why this filter is needed" rather than "needs more reading." The agent may continue authorized low-risk exploration, but must not present an unconfirmed checkpoint as the user's settled understanding. It should surface relevant debt before work that relies on it.
+Treat the researcher's own restatement and explicit confidence as the primary evidence of their understanding. Source verification is separate: an agent reading a paper, inspecting code, or checking an experiment cannot mark the researcher as understanding it. If the user only states confidence, record it as self-reported; if they have not restated a claim, say so. Never invent a paraphrase or infer understanding from silence or agreement.
 
-For a long pause or when the user asks to review, use active recall before explanation when useful. Ask a small set of questions based on the actual question, evidence, and derivation chain. Include basic object-level questions when the user is early in a topic, then move through causal reasoning, scope boundaries, downstream dependencies, and counterfactuals as appropriate. After the user responds, correct against actual evidence and artifacts; store only the resulting cognitive debt or confirmed understanding, not a transcript of the quiz.
+An early question such as "I cannot follow this conclusion" is already evidence of a specific understanding gap. Pause the explanation at that point, locate the relevant source, data transformation, or assumption, explain the smallest missing link, and invite the user to restate it in their own words when useful. Do this during ordinary research, not only during a later review. Correct their account against inspectable evidence without treating an elementary question as failure.
+
+When a data choice, transformation, experiment result, key inference, or decision will constrain later work, keep a short understanding checkpoint: the claim and reason, evidence status, the user's actual restatement and self-reported confidence, and what would invalidate the claim. Record a specific gap when the user cannot yet explain a consequential link. Surface relevant gaps before relying on them; do not make all research wait for every gap to close.
+
+For a long pause or a requested review, use active recall before explanation when useful. Select a few questions from the current research problem, evidence, and derivation chain, including basic object-level questions where appropriate. After the answer, correct using actual materials and update only the user's restatement, confidence, and remaining gap, not a quiz transcript.
 
 ## Activities and Sources
 
@@ -39,15 +43,17 @@ Local project files, supplied documents, primary sources, datasets, official doc
 
 Reading a source does not by itself authorize a network search, download, tool installation, new database, publication, or broad reproduction. Follow the current request and available capabilities. Preserve existing user materials and project conventions; do not reorganize a library merely to fit this template.
 
+For a research tool connection, read [the tools guide](tools/README.md) and use `research-tool-connect` when the user wants setup, verification, or a reusable record. A previous tool note is evidence of an earlier check, not live availability. Keep tool access procedures separate from source evidence and from the researcher's understanding.
+
 ## Main Session and Branches
 
-The main coordinator maintains the research question, source map, unresolved claims, priorities, current next step, cognitive checkpoints, and the small set of derivation links that affect conclusions. `.agents/research-flow/state.md` is a compact handoff, not a transcript or authority. Only create or update it when persistence is in scope. Read the latest version before editing; existing sources and final artifacts take precedence over its summaries.
+The main research conversation maintains `.agents/research-flow/understanding.md` when persistence is in scope. It records the current question and how it changed, evidence and unresolved claims, consequential decisions and their reasons, the researcher's own restatements and confidence, understanding gaps, and the derivation links that affect conclusions. It is a compact aid to understanding, not a transcript, issue tracker, or authority. Read the latest version before editing; actual sources and artifacts take precedence over its summaries. Do not copy Linear issues, task statuses, or session ownership into it; link to a relevant issue only when it helps locate work behind a claim.
 
 For each consequential data or experiment node, record only enough lineage to trace `input/version -> operation and key configuration -> output -> validation -> downstream consumer`. Do not inventory every temporary file. Use stable IDs or paths to connect source cards, datasets, scripts, run records, figures, drafts, and decisions where they exist. A missing link is an explicit uncertainty, not a reason to reconstruct a plausible history.
 
-For a substantial source, use [source.md](templates/source.md). For multi-source writing, use [synthesis.md](templates/synthesis.md). Trim fields that do not help the task. A branch session may investigate a source cluster or one bounded question, but it returns its evidence packet to the main coordinator instead of editing the shared state.
+For a substantial source, use [source.md](templates/source.md). For multi-source writing, use [synthesis.md](templates/synthesis.md). Trim fields that do not help the task. A separate conversation may investigate a source cluster or one bounded question, then return evidence and uncertainty to the main research conversation. It does not silently rewrite the shared understanding file.
 
-Before dispatch, specify the question, permitted source set or search boundary, desired depth, output format, what counts as a locator, and return destination. Branches should report negative findings and access limits as carefully as positive claims. Do not claim a chat branch, file, source download, or external lookup exists without observing it.
+The user opens separate conversations manually: a blank conversation or a fork of the main conversation, in the current workspace or a new worktree. The user or main conversation can formulate the question, source boundary, desired depth, and return shape. Research directions may split or merge as evidence changes; do not maintain a fixed session tree. A separate conversation reports negative findings and access limits as carefully as positive claims. Do not claim a conversation, file, source download, or external lookup exists without observing it.
 
 On resume, verify old summaries and important derivation links against the actual source material and current artifact. Do not assume that an interrupted reader or unavailable source is complete. Preserve partial notes; distinguish them from checked evidence. Start with active recall when the user requests review or when a long gap makes their own understanding the priority.
 
